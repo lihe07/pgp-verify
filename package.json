@@ -1,6 +1,7 @@
 {
   "name": "pgp-verify",
   "type": "module",
+  "license": "MIT",
   "scripts": {
     "dev": "vinxi dev",
     "build": "vinxi build",

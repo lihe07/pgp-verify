@@ -1,4 +1,4 @@
-import { createSignal, Show } from "solid-js";
+import { createSignal, onMount, Show } from "solid-js";
 import * as openpgp from "openpgp";
 
 async function getPubkey(keyserver: string, email: string): Promise<string> {
@@ -17,7 +17,17 @@ interface VerifyResult {
 
 export default function Home() {
   const [keyserver, setKeyserver] = createSignal("https://keys.openpgp.org");
-  const [email, setEmail] = createSignal("li@imlihe.com");
+
+
+  let defaultEmail = "harvey-l@gatech.edu";
+
+  onMount(() => {
+    // Check location query
+    defaultEmail = new URLSearchParams(window.location.search).get("email") || defaultEmail;
+    setEmail(defaultEmail);
+  })
+
+  const [email, setEmail] = createSignal("");
   const [message, setMessage] = createSignal("");
 
   const [status, setStatus] = createSignal<VerifyResult | null>(null);
